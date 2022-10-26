@@ -11,6 +11,28 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  bool isChecked = false;
+  TextEditingController loginTextController = TextEditingController();
+  TextEditingController passwordTextController = TextEditingController();
+  String wrongLogin = '';
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
+  void authorization() {
+    final login = loginTextController.text;
+    final password = passwordTextController.text;
+    if (login == 'admin' && password == '123456') {
+      Navigator.of(context).pushNamed('/welcome');
+    } else {
+      wrongLogin = 'Неправильний пароль чи логін';
+    }
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,23 +43,39 @@ class _LoginScreenState extends State<LoginScreen> {
           child: Column(
             children: [
               TextField(
+                controller: loginTextController,
                 decoration: const InputDecoration(
-                    border: OutlineInputBorder(), hintText: "Login"),
+                  border: OutlineInputBorder(),
+                  hintText: "Login",
+                ),
               ),
               SizedBox(
                 height: 20,
               ),
               TextField(
+                controller: passwordTextController,
                 decoration: const InputDecoration(
                     border: OutlineInputBorder(), hintText: "Password"),
               ),
               Row(
                 children: [
-                  Checkbox(value: false, onChanged: (bool) {}),
+                  Checkbox(value: isChecked, onChanged: (newBool) {}),
                   Text("Запам'ятати"),
                   Spacer(),
-                  OutlinedButton(onPressed: () {}, child: Text('Далі'))
+                  OutlinedButton(
+                      onPressed: () {
+                        authorization();
+                      },
+                      child: Text('Далі'))
                 ],
+              ),
+              Text(
+                wrongLogin,
+                style: TextStyle(
+                  color: Colors.red,
+                  fontSize: 30,
+                ),
+                textAlign: TextAlign.center,
               )
             ],
           ),
