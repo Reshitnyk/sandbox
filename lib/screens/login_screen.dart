@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -19,7 +20,20 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   void initState() {
     // TODO: implement initState
+    _getRememberMe(bool);
     super.initState();
+  }
+
+  _rememberMe(bool) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setBool('isChecked', true);
+    return true;
+  }
+
+  _getRememberMe(bool) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.getBool('isChecked');
+    setState(() {});
   }
 
   void authorization() {
@@ -59,7 +73,13 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               Row(
                 children: [
-                  Checkbox(value: isChecked, onChanged: (newBool) {}),
+                  Checkbox(
+                      value: isChecked,
+                      onChanged: (newBool) {
+                        setState(() {
+                          _rememberMe(newBool);
+                        });
+                      }),
                   Text("Запам'ятати"),
                   Spacer(),
                   OutlinedButton(
