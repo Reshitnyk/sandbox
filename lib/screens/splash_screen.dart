@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:splashscreen/splashscreen.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
 import 'login_screen.dart';
 
 class StartWidget extends StatefulWidget {
@@ -14,7 +14,7 @@ class _StartWidgetState extends State<StartWidget> {
   @override
   Widget build(BuildContext context) {
     return SplashScreen(
-        seconds: 13,
+        seconds: 3,
         navigateAfterSeconds: LoginScreen(),
         title: const Text(
           'Welcome to Sandbox',
